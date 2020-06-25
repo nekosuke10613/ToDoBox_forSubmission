@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using DG.Tweening;
 
@@ -9,9 +10,9 @@ public class AppWindow : MonoBehaviour
     [SerializeField]
     RectTransform m_rect;
 
-    public void Init()
+    public void Init(UnityAction callback)
     {
-        
+        callback.Invoke();
     }
     // Update is called once per frame
     void Update()

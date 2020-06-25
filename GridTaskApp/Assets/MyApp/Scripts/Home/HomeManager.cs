@@ -11,8 +11,8 @@ enum HomePage
 }
 public class HomeManager : MonoBehaviour
 {
-    [SerializeField,Header("各ページのプレハブを生成する親オブジェクト")]
-    GameObject m_pagesParent;
+    //[SerializeField,Header("各ページのプレハブを生成する親オブジェクト")]
+    //GameObject m_pagesParent;
 
     //アタッチWindowクラスに変える
     [SerializeField,Header("各ページプレハブ")]
@@ -21,6 +21,15 @@ public class HomeManager : MonoBehaviour
     //現在のページ名
     HomePage m_currentPage = HomePage.List;
 
+    [SerializeField]
+    TaskListManager m_taskListMgr;
+    [SerializeField]
+    AddTaskManager m_addTaskMgr;
+    [SerializeField]
+    OptionManager m_optionMgr;
+
+    
+
     //TODO 後で消す　テスト用
     private void Start()
     {
@@ -28,6 +37,7 @@ public class HomeManager : MonoBehaviour
     }
     public void Init()
     {
+
         //全てのページを非アクティブに
         foreach (AppWindow page in m_appWins)
         {
@@ -61,7 +71,29 @@ public class HomeManager : MonoBehaviour
         var page = m_appWins[(int)m_currentPage - 1];
         page.gameObject.SetActive(true);
         //ページの初期化を呼ぶ(Window)
-        page.Init();
+        switch (nextPage)
+        {
+            case HomePage.List:
+                page.Init(()=>  m_taskListMgr.Init());
+                break;
+            case HomePage.Add:
+                page.Init(() => m_addTaskMgr.Init());
+                break;
+            case HomePage.Option:
+                page.Init(() => m_optionMgr.Init());
+                break;
+        }
+        
 
     }
+
+    #region アタッチ自動化
+#if UNITY_EDITOR
+    //スクリプト追加時に毎回自動でアタッチしてもらう
+    void Reset()
+    {
+        
+    }
+#endif
+    #endregion
 }
