@@ -11,7 +11,6 @@ using DG.Tweening;
 [RequireComponent(typeof(RectTransform))]
 public class AppButton : MonoBehaviour,
     IPointerClickHandler,
-    IPointerEnterHandler,
     IPointerExitHandler,
     IPointerDownHandler,
     IPointerUpHandler
@@ -53,19 +52,16 @@ public class AppButton : MonoBehaviour,
     void Update()
     {
         //長押しのカウント
-        if (m_isPush)
-        {
-            m_pushCount += Time.deltaTime;
-            if (LongClickTime < m_pushCount)
-            {
-                if (m_onLongClick != null)
-                    m_onLongClick.Invoke();
-                print("長押し処理");
-                m_pushCount = 0;
-                m_isPush = false;
-            }
+        if (!m_isPush) return;
+        
+        m_pushCount += Time.deltaTime;
 
-        }
+        if (LongClickTime >= m_pushCount) return;
+
+        if (m_onLongClick != null)
+            m_onLongClick.Invoke();
+        m_pushCount = 0;
+        m_isPush = false;
 
     }
     //普通にクリック
@@ -74,15 +70,10 @@ public class AppButton : MonoBehaviour,
         if(m_onClick != null)
             m_onClick.Invoke();
     }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        Debug.Log("Enter");
-    }
+    
     public void OnPointerExit(PointerEventData eventData)
     {
         m_isPush = false;
-        Debug.Log("Exit");
     }
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -105,6 +96,7 @@ public class AppButton : MonoBehaviour,
     {
         m_rect.DOScale(Vector2.one, m_animTime);
     }
+    #region アタッチ自動化
 #if UNITY_EDITOR
     //スクリプト追加時に毎回自動でアタッチしてもらう
     void Reset()
@@ -112,4 +104,5 @@ public class AppButton : MonoBehaviour,
         m_rect = gameObject.GetComponent<RectTransform>();
     }
 #endif
+    #endregion
 }
