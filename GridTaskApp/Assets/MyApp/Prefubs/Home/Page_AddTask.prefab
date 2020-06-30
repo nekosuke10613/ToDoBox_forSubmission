@@ -188,7 +188,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u3084\u308A\u305F\u3044\u3053\u3068\u3092\u8FFD\u52A0\u3059\u308B"
+  m_Text: "\u4ECA\u65E5\u3084\u308B\u3053\u3068\u3092\u8FFD\u52A0\u3059\u308B"
 --- !u!1 &1314511599342668284
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,7 +688,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &321137302314487249
 RectTransform:
   m_ObjectHideFlags: 0
@@ -708,7 +708,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -2000}
   m_SizeDelta: {x: 1090, y: 1920}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6518942728562415385
@@ -773,4 +773,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36489726d2db3734e973c311161c5126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_rect: {fileID: 321137302314487249}
   m_inputText: {fileID: 2840016989165573511}

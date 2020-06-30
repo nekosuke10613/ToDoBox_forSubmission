@@ -25,11 +25,15 @@ public class AppButton : MonoBehaviour,
     RectTransform m_rect;
 
     //--通常SerializeFieldはここより上に書く-----------------------
+    [SerializeField, Header("アニメーションするか")]
+    bool m_isAnime = true;
+    
     //イベントエディタ拡張
     [SerializeField,Header("クリック時処理")]
     UnityEvent m_onClick;
     [SerializeField, Header("一定時間長押した時の処理")]
     UnityEvent m_onLongClick;
+
 
     //-------------------------------------------
     
@@ -90,11 +94,13 @@ public class AppButton : MonoBehaviour,
     //アニメーション関連
     void InAnim()
     {
-        m_rect.DOScale(downScale, m_animTime);
+        if(m_isAnime)
+            m_rect.DOScale(downScale, m_animTime);
     }
     void OutAnim()
     {
-        m_rect.DOScale(Vector2.one, m_animTime);
+        if (m_isAnime)
+            m_rect.DOScale(Vector2.one, m_animTime);
     }
     #region アタッチ自動化
 #if UNITY_EDITOR

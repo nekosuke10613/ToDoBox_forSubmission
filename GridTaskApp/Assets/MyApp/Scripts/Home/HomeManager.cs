@@ -69,7 +69,7 @@ public class HomeManager : MonoBehaviour
 
         //*-- 新しいページを開く --*/
         var page = m_appWins[(int)m_currentPage - 1];
-        page.gameObject.SetActive(true);
+        
         //ページの初期化を呼ぶ(Window)
         switch (nextPage)
         {
@@ -83,7 +83,7 @@ public class HomeManager : MonoBehaviour
                 page.Init(() => m_optionMgr.Init());
                 break;
         }
-        
+        page.gameObject.SetActive(true);
 
     }
 
