@@ -5,12 +5,23 @@ using UnityEngine;
 
 public class Task
 {
-    public int ID;//タスク自体の識別ID
-    public int HouseID; //登録したタスク表の場所
-    public string Name;　//タスクの名前
-    public string Description;　//タスクの詳細説明
-    public bool IsFinish;　//このタスクは完了したものか
+    //IDの管理・設定などはTask内で行う
+    public int ID { get; private set; }//タスク自体の識別ID
+    public int HouseID { get; private set; } //登録したタスク表の場所
+    public string Name { get; private set; }　//タスクの名前
+    public string Description { get; private set; }　//タスクの詳細説明
+    public string　Limit { get; private set; }　//タスクの期限
+    public string Priority { get; private set; }　//タスクの優先度
+    public bool IsFinish = false;　//このタスクは完了したものか
 
+    public void SetInfo(int houseID,string name, string desc, string limit, string priority)
+    {
+        HouseID = houseID;
+        Name = name;
+        Description = desc;
+        Limit = limit;
+        Priority = priority;
+    }
 
 }
 //タスクデータの管理クラス　シングルトンにしたい
@@ -26,7 +37,8 @@ public class DataTaskManager : SingletonMonoBehaviour<DataTaskManager>
     [SerializeField, Header("個別のタスク")]
     SingleTask m_singleTask;
 
-    List<Task> m_taskDic = new List<Task>();
+    //タスク入れ物リスト
+    List<SingleTask> m_singleTaskList = new List<SingleTask>();
 
     
     // Start is called before the first frame update
@@ -49,14 +61,20 @@ public class DataTaskManager : SingletonMonoBehaviour<DataTaskManager>
     /// </summary>
     public void CreateInfo(Task task)
     {
-        
+        //タスク情報入れる先の住所を持ってくる
+        var taskAdress = m_singleTaskList[task.HouseID];
+        //情報を入れる
+        taskAdress.SetTask(task.Name, task.Description, task.Limit, task.Priority);
     }
     //単体方眼をクリエイト
     //TODO : (指定した空白に情報を詰める処理にする)
-    public void CreateTask(string name)
+    void CreateTask(string title,string desctiption,string limit,string priority)
     {
         var task = Instantiate(m_singleTask,m_parent);
-        task.SetTask(name);
+        task.SetTask(title,desctiption,limit,priority);
+        //SingleTaskをリストに保存(Listのintが住所になる)
+        m_singleTaskList.Add(task);
+
         AllTaskNum++;
         task.SetPosition(TaskInitPos,TaskSpace,AllTaskNum-1);
         
@@ -64,9 +82,9 @@ public class DataTaskManager : SingletonMonoBehaviour<DataTaskManager>
     //1行３つのの空白を追加する
     public void CreateThreeEmpty()
     {
-        CreateTask("");
-        CreateTask("");
-        CreateTask("");
+        CreateTask("","","","");
+        CreateTask("","","","");
+        CreateTask("","","","");
     }
 
     /// <summary>

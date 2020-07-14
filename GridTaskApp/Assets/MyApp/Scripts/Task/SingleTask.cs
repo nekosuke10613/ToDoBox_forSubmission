@@ -9,7 +9,13 @@ public class SingleTask : MonoBehaviour
     [SerializeField]
     RectTransform m_rect;
     [SerializeField]
-    Text m_taskName;
+    Text m_taskTitle;
+    [SerializeField]
+    Text m_taskDescription;
+    [SerializeField]
+    Text m_taskLimit;
+    [SerializeField]
+    Text m_taskPriority;
     [SerializeField, Header("チェックマークImage")]
     Image m_checkImage;
 
@@ -30,9 +36,12 @@ public class SingleTask : MonoBehaviour
         m_buttonBG.DOFade(0.5f,0.5f);
     }
 
-    public void SetTask(string text)
+    public void SetTask(string text,string description,string limit,string priority)
     {
-        m_taskName.text = text;
+        m_taskTitle.text = text;
+        m_taskDescription.text = description;
+        m_taskLimit.text = limit;
+        m_taskPriority.text = priority;
     }
     public void SetPosition(Vector2 pos, Vector2 space,int taskNum)
     {

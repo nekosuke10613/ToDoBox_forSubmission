@@ -7,13 +7,26 @@ using DG.Tweening;
 
 public class AddTaskManager : MonoBehaviour
 {
+#region *** SerializeField ***
     [SerializeField]
     RectTransform m_rect;
-    [SerializeField,Header("入力したテキスト")]
-    Text m_inputText;
-    
+    [SerializeField,Header("タイトル")]
+    Text m_titleInput;
+    [SerializeField, Header("詳細説明")]
+    Text m_desctiptionInput;
+    [SerializeField, Header("期限(仮にフィールド、--:--で入力)")]
+    Text m_scheduleInput;
+    [SerializeField, Header("優先度ラベル")]
+    Text m_priorityLabel;
 
-    
+    [SerializeField]
+    Dropdown m_priorityDropdown;
+
+    [SerializeField, Header("仮タスクアドレス入力")]
+    Text m_testAdressText;
+
+#endregion
+
     AppWindow m_appWin;
     
 
@@ -27,14 +40,42 @@ public class AddTaskManager : MonoBehaviour
             callBack.Invoke();
         m_rect.DOAnchorPos(m_defaultPos, 0.5f);
     }
-
+    /// <summary>
+    /// 保存ボタンでタスクを保存する
+    /// </summary>
     public void OnSave()
     {
         //入力したタスクを登録する
-        var text = m_inputText.text;
-        //TODO 
-        FindObjectOfType<DataTaskManager>().CreateTask(text);
+        var testAdress = int.Parse(m_testAdressText.text);
+
+        var task = new Task();
+        task.SetInfo(
+            testAdress,
+            m_titleInput.text,
+            m_desctiptionInput.text,
+            m_scheduleInput.text,
+            m_priorityLabel.text
+            );
+        DataTaskManager.Instance.CreateInfo(task);
+        Clear();
     }
+    //タスク保存後の入力値リセット
+    void Clear()
+    {
+        m_titleInput.text = "";
+        m_desctiptionInput.text = "";
+        m_scheduleInput.text = "00:00";
+        //Debug.Log(m_priorityDropdown.options[0]);
+        m_priorityLabel.text = m_priorityDropdown.options[0].text;
+    }
+    /// <summary>
+    ///行の追加ボタン
+    /// </summary>
+    public void OnAddLine()
+    {
+        DataTaskManager.Instance.CreateThreeEmpty();
+    }
+
     #region アタッチ自動化
 #if UNITY_EDITOR
     //スクリプト追加時に毎回自動でアタッチしてもらう 途中から追加した場合は自分で追加
