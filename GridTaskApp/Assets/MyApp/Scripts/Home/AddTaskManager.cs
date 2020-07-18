@@ -37,9 +37,12 @@ public class AddTaskManager : MonoBehaviour
     //Add用ボックスの一覧リスト。ページ選択するたびに情報クリア＆数調整するからDicにはしない。
     List<AddSingleTask> m_addTaskList = new List<AddSingleTask>();
 
+    
+
     Vector2 m_defaultPos = Vector2.zero;
     Vector2 m_initPos = new Vector2(0, -2000);
     float m_scrollHeight = 500;
+
 
     //OpenとInitで分けたほうがいいのでは？
     public void Init(UnityAction callBack = null)
@@ -58,7 +61,7 @@ public class AddTaskManager : MonoBehaviour
         {
             var adTask= Instantiate(m_addSingleTask,m_content);
             m_addTaskList.Add(adTask);
-            adTask.Init();
+            adTask.Init(this);
             //位置調整をする
             adTask.SetPosition(new Vector2(-300, 0), new Vector2(300, 200), i);
 
@@ -78,7 +81,6 @@ public class AddTaskManager : MonoBehaviour
             //Instantiate(single); //一応オブジェクト持ってこれるけどなんかナンセンス
             var task = stLis[i].GetTask();
             string test = task.Name;
-            Debug.Log(i);
             //ここでAddSingleTaskのInitorSetInfoを呼びたい
             m_addTaskList[i].SetInfo(task,i);
 
@@ -142,6 +144,17 @@ public class AddTaskManager : MonoBehaviour
             Destroy(adTsk.gameObject);
         }
         m_addTaskList.Clear();
+    }
+
+    int m_currentID = 0;
+    GameObject m_prevImage = null;
+    public void SetCurrentBox(int id,GameObject image)
+    {
+        if (m_prevImage != null)
+            m_prevImage.SetActive(false);
+        m_currentID = id;
+        //ここで画像の非アクティブも行う
+        m_prevImage = image;
     }
     #region アタッチ自動化
 #if UNITY_EDITOR
