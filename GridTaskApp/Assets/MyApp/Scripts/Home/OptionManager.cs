@@ -10,9 +10,10 @@ public class OptionManager : MonoBehaviour
         if (callback != null)
             callback.Invoke();
     }
-    // Update is called once per frame
-    void Update()
+    
+    public void Open(UnityAction callback = null)
     {
         
+
     }
 }

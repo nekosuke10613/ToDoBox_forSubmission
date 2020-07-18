@@ -12,7 +12,8 @@ public class Task
     public string Description { get; private set; }　//タスクの詳細説明
     public string　Limit { get; private set; }　//タスクの期限
     public string Priority { get; private set; }　//タスクの優先度
-    public bool IsFinish = false;　//このタスクは完了したものか
+
+    public bool IsFinish { get; private set; }　//このタスクは完了したものか
 
     public void SetInfo(int houseID,string name, string desc, string limit, string priority)
     {
@@ -21,6 +22,26 @@ public class Task
         Description = desc;
         Limit = limit;
         Priority = priority;
+        IsFinish = false;
+
+        CreateID();
+    }
+    /// <summary>
+    /// タスクの終了状態を保存する
+    /// </summary>
+    /// <param name="isFinish"></param>
+    public void SaveIsFinish(bool isFinish)
+    {
+        IsFinish = isFinish;
+    }
+    void CreateID()
+    {
+
+    }
+    //CSVかJsonか何かに全タスク情報＆タスクスペースの情報を保存する
+    void SaveData()
+    {
+
     }
 
 }
@@ -37,8 +58,8 @@ public class DataTaskManager : SingletonMonoBehaviour<DataTaskManager>
     [SerializeField, Header("個別のタスク")]
     SingleTask m_singleTask;
 
-    //タスク入れ物リスト
-    List<SingleTask> m_singleTaskList = new List<SingleTask>();
+    //タスク入れ物リスト ページがつくから、あとでDictionaryかリストのリストになる
+    public List<SingleTask> SingleTaskList = new List<SingleTask>();
 
     
     // Start is called before the first frame update
@@ -62,29 +83,34 @@ public class DataTaskManager : SingletonMonoBehaviour<DataTaskManager>
     public void CreateInfo(Task task)
     {
         //タスク情報入れる先の住所を持ってくる
-        var taskAdress = m_singleTaskList[task.HouseID];
+        var taskAdress = SingleTaskList[task.HouseID];
         //情報を入れる
-        taskAdress.SetTask(task.Name, task.Description, task.Limit, task.Priority);
+        taskAdress.SetTask(task);
     }
     //単体方眼をクリエイト
     //TODO : (指定した空白に情報を詰める処理にする)
-    void CreateTask(string title,string desctiption,string limit,string priority)
+    void CreateTask(Task task)
     {
-        var task = Instantiate(m_singleTask,m_parent);
-        task.SetTask(title,desctiption,limit,priority);
+        //空のデータを挿入
+        task.SetInfo(AllTaskNum,"","","","");
+        var singleTask = Instantiate(m_singleTask,m_parent);
+        singleTask.SetTask(task);
         //SingleTaskをリストに保存(Listのintが住所になる)
-        m_singleTaskList.Add(task);
+        SingleTaskList.Add(singleTask);
 
         AllTaskNum++;
-        task.SetPosition(TaskInitPos,TaskSpace,AllTaskNum-1);
+        singleTask.SetPosition(TaskInitPos,TaskSpace,AllTaskNum-1);
         
     }
     //1行３つのの空白を追加する
     public void CreateThreeEmpty()
     {
-        CreateTask("","","","");
-        CreateTask("","","","");
-        CreateTask("","","","");
+        for (int i = 0; i < 3; i++)
+        {
+            var task = new Task();
+            //から情報の初期タスクを作る
+            CreateTask(task);
+        }
     }
 
     /// <summary>

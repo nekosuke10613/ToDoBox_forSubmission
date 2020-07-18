@@ -43,6 +43,12 @@ public class HomeManager : MonoBehaviour
         {
             page.gameObject.SetActive(false);
         }
+        //各ページの初期化処理を行う
+
+        m_addTaskMgr.Init();
+        m_taskListMgr.Init();
+        m_optionMgr.Init();
+
         SetPage(HomePage.List);
 
     }
@@ -74,13 +80,13 @@ public class HomeManager : MonoBehaviour
         switch (nextPage)
         {
             case HomePage.List:
-                page.Init(()=>  m_taskListMgr.Init());
+                page.Init(()=>  m_taskListMgr.Open());
                 break;
             case HomePage.Add:
-                page.Init(() => m_addTaskMgr.Init());
+                page.Init(() => m_addTaskMgr.Open());
                 break;
             case HomePage.Option:
-                page.Init(() => m_optionMgr.Init());
+                page.Init(() => m_optionMgr.Open());
                 break;
         }
         page.gameObject.SetActive(true);
