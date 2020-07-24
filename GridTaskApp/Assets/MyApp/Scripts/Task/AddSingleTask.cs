@@ -93,7 +93,7 @@ public class AddSingleTask : MonoBehaviour
     }
     #region アタッチ自動化
 #if UNITY_EDITOR
-    //スクリプト追加時に毎回自動でアタッチしてもらう
+    //スクリプト新規追加時に毎回自動でアタッチしてもらう
     void Reset()
     {
         m_rect = gameObject.GetComponent<RectTransform>();

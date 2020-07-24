@@ -27,18 +27,19 @@ public class AddTaskManager : MonoBehaviour
     [SerializeField, Header("SingleTaskのスクロールバーのコンテンツ")]
     RectTransform m_content;
 
+    [SerializeField, Header("セーブボタン")]
+    AddSaveButton m_saveButton;
+
     [SerializeField, Header("仮タスクアドレス入力")]
     Text m_testAdressText;
 
 #endregion
 
-
     AppWindow m_appWin;
     //Add用ボックスの一覧リスト。ページ選択するたびに情報クリア＆数調整するからDicにはしない。
     List<AddSingleTask> m_addTaskList = new List<AddSingleTask>();
-
     
-
+    //数値系
     Vector2 m_defaultPos = Vector2.zero;
     Vector2 m_initPos = new Vector2(0, -2000);
     float m_scrollHeight = 500;
@@ -48,6 +49,7 @@ public class AddTaskManager : MonoBehaviour
     public void Init(UnityAction callBack = null)
     {
         ListClear();
+
 
         m_rect.anchoredPosition = m_initPos;
         if (callBack != null)
@@ -74,6 +76,9 @@ public class AddTaskManager : MonoBehaviour
     {
         if (callBack != null)
             callBack.Invoke();
+
+        m_saveButton.Init();
+
         //タスクのデータを持ってくる
         var stLis = DataTaskManager.Instance.SingleTaskList;
         for(int i = 0; i < stLis.Count;i++)
@@ -103,8 +108,10 @@ public class AddTaskManager : MonoBehaviour
     /// </summary>
     public void OnSave()
     {
+        //セーブ禁止ならreturn 
+        if (!m_saveButton.CanSave) return;
         //入力したタスクを登録する
-        var testAdress = int.Parse(m_testAdressText.text);
+        var testAdress = m_currentID;//int.Parse(m_testAdressText.text);
 
         var task = new Task();
         task.SetInfo(

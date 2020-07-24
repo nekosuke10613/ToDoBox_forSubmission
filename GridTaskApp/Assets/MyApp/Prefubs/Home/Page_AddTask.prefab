@@ -922,7 +922,18 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4925737606468942867}
+        m_MethodName: OnValueChange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
@@ -1920,6 +1931,7 @@ GameObject:
   - component: {fileID: 8288720927255644979}
   - component: {fileID: 1554754114948745222}
   - component: {fileID: 8427536423386621363}
+  - component: {fileID: 4925737606468942867}
   m_Layer: 5
   m_Name: save_button
   m_TagString: Untagged
@@ -2015,6 +2027,19 @@ MonoBehaviour:
   m_onLongClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4925737606468942867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5262615436295749281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1452f9421291d5b449504bb5acbf1606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_saveButton: {fileID: 1554754114948745222}
 --- !u!1 &5460981218426682931
 GameObject:
   m_ObjectHideFlags: 0
@@ -2889,6 +2914,7 @@ MonoBehaviour:
   m_priorityLabel: {fileID: 5742714164758480991}
   m_priorityDropdown: {fileID: 1210563989460243244}
   m_content: {fileID: 3822604821470242670}
+  m_saveButton: {fileID: 4925737606468942867}
   m_testAdressText: {fileID: 8471307069588498292}
 --- !u!1 &8439649624979890010
 GameObject:

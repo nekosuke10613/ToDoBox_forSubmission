@@ -10,16 +10,28 @@ public class TaskListManager : MonoBehaviour
     RectTransform m_content;
     [SerializeField]
     Scrollbar m_bar;
+    [SerializeField, Header("ページ切り替えボタン")]
+    GameObject m_pageButton;
 
-    public void Init(UnityAction callback = null)
+    bool m_isDaily = true;
+
+    public void Init( UnityAction callback = null)
     {
         if (callback != null)
             callback.Invoke();
+
+        
+
         
     }
 
-    public void Open(UnityAction callback = null)
+    public void Open(bool isDaily,UnityAction callback = null)
     {
+        //false：デイリー　true：それ以外
+        m_isDaily = isDaily;
+
+        //デイリーならページ切り替えボタンを表示しない
+        m_pageButton.SetActive(m_isDaily);
         //Scrollバーのコンテンツサイズを調整する
 
         float h = DataTaskManager.Instance.TaskHeight();

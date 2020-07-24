@@ -5,9 +5,10 @@ using UnityEngine;
 enum HomePage
 {
     None = 0,
-    List = 1,   //一覧
-    Add = 2,    //登録
-    Option = 3, //
+    Daily = 1,   //一覧(デイリー) 
+    Other = 2,    //一覧(それ以外)
+    Option = 3, //　設定
+    Add = 4,
 }
 public class HomeManager : MonoBehaviour
 {
@@ -19,10 +20,12 @@ public class HomeManager : MonoBehaviour
     AppWindow[]  m_appWins = null;
 
     //現在のページ名
-    HomePage m_currentPage = HomePage.List;
+    HomePage m_currentPage = HomePage.Daily;
 
     [SerializeField]
-    TaskListManager m_taskListMgr;
+    TaskListManager m_dailyTaskListMgr;
+    [SerializeField]
+    TaskListManager m_otherTaskListMgr;
     [SerializeField]
     AddTaskManager m_addTaskMgr;
     [SerializeField]
@@ -46,10 +49,11 @@ public class HomeManager : MonoBehaviour
         //各ページの初期化処理を行う
 
         m_addTaskMgr.Init();
-        m_taskListMgr.Init();
+        m_dailyTaskListMgr.Init();
+        m_otherTaskListMgr.Init();
         m_optionMgr.Init();
 
-        SetPage(HomePage.List);
+        SetPage(HomePage.Daily);
 
     }
 
@@ -79,14 +83,17 @@ public class HomeManager : MonoBehaviour
         //ページの初期化を呼ぶ(Window)
         switch (nextPage)
         {
-            case HomePage.List:
-                page.Init(()=>  m_taskListMgr.Open());
+            case HomePage.Daily:
+                page.Init(()=>  m_dailyTaskListMgr.Open(false));
                 break;
-            case HomePage.Add:
-                page.Init(() => m_addTaskMgr.Open());
+            case HomePage.Other:
+                page.Init(() => m_dailyTaskListMgr.Open(true));
                 break;
             case HomePage.Option:
                 page.Init(() => m_optionMgr.Open());
+                break;
+            case HomePage.Add:
+                page.Init(() => m_addTaskMgr.Open());
                 break;
         }
         page.gameObject.SetActive(true);
