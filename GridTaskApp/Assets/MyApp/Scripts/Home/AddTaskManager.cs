@@ -40,10 +40,10 @@ public class AddTaskManager : MonoBehaviour
     List<AddSingleTask> m_addTaskList = new List<AddSingleTask>();
     
     //数値系
-    Vector2 m_defaultPos = Vector2.zero;
-    Vector2 m_initPos = new Vector2(0, -2000);
-    float m_scrollHeight = 500;
-
+    readonly Vector2 m_defaultPos = Vector2.zero;
+    readonly Vector2 m_initPos = new Vector2(0, -2000);
+    readonly float m_scrollHeight = 750;
+    readonly float m_animSpeed = 0.5f;
 
     //OpenとInitで分けたほうがいいのでは？
     public void Init(UnityAction callBack = null)
@@ -54,7 +54,7 @@ public class AddTaskManager : MonoBehaviour
         m_rect.anchoredPosition = m_initPos;
         if (callBack != null)
             callBack.Invoke();
-        m_rect.DOAnchorPos(m_defaultPos, 0.5f);
+        
 
         
         //最初に初期選択状態の方眼の数分AddSingleTaskを生成してリストに保存
@@ -101,6 +101,17 @@ public class AddTaskManager : MonoBehaviour
             m_content.sizeDelta = new Vector2(
                 m_content.sizeDelta.x,
                 DataTaskManager.Instance.TaskHeight());
+
+       　//ここまで来たらアニメーションする
+        m_rect.DOAnchorPosY(0, m_animSpeed);
+
+    }
+    public void OnClose()
+    {
+        //アニメーション後非アクティブにする
+        m_rect.DOAnchorPosY(m_initPos.y, m_animSpeed)
+            .OnComplete(()=> gameObject.SetActive(false));
+        
         
     }
     /// <summary>

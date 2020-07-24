@@ -582,6 +582,7 @@ GameObject:
   - component: {fileID: 811659868207038582}
   - component: {fileID: 8870248771819079302}
   - component: {fileID: 713563809488859641}
+  - component: {fileID: 3585323290655381869}
   m_Layer: 5
   m_Name: Page_TaskList
   m_TagString: Untagged
@@ -675,6 +676,27 @@ MonoBehaviour:
   m_content: {fileID: 3515286066178540839}
   m_bar: {fileID: 3383741198874442180}
   m_pageButton: {fileID: 4634865214336777945}
+--- !u!223 &3585323290655381869
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5033778093090713681}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 1
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 10
+  m_TargetDisplay: 0
 --- !u!1 &5367832676324532136
 GameObject:
   m_ObjectHideFlags: 0

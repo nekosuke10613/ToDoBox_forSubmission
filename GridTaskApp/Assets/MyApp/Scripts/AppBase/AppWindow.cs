@@ -13,6 +13,7 @@ public class AppWindow : MonoBehaviour
     public void Init(UnityAction callback)
     {
         callback.Invoke();
+        gameObject.SetActive(true);
     }
     // Update is called once per frame
     void Update()

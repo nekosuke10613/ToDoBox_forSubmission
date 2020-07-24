@@ -40,7 +40,6 @@ public class HomeManager : MonoBehaviour
     }
     public void Init()
     {
-
         //全てのページを非アクティブに
         foreach (AppWindow page in m_appWins)
         {
@@ -67,7 +66,17 @@ public class HomeManager : MonoBehaviour
         //同じページだったらreturn
         if (nextPage == (int)m_currentPage)
             return;
+        if (nextPage == (int)HomePage.Add)
+        {
+            OpenAddPage();
+            return;
+        }
         SetPage((HomePage)nextPage);
+    }
+    void OpenAddPage()
+    {
+        m_appWins[(int)HomePage.Add-1].Init(() => m_addTaskMgr.Open());
+        
     }
     void SetPage(HomePage nextPage)
     {
@@ -92,11 +101,8 @@ public class HomeManager : MonoBehaviour
             case HomePage.Option:
                 page.Init(() => m_optionMgr.Open());
                 break;
-            case HomePage.Add:
-                page.Init(() => m_addTaskMgr.Open());
-                break;
         }
-        page.gameObject.SetActive(true);
+        
 
     }
 
