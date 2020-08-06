@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,7 +44,7 @@ public class AddTaskManager : MonoBehaviour
     readonly Vector2 m_defaultPos = Vector2.zero;
     readonly Vector2 m_initPos = new Vector2(0, -2000);
     readonly float m_scrollHeight = 750;
-    readonly float m_animSpeed = 0.5f;
+    readonly float m_animSpeed = 0.3f;
 
     //OpenとInitで分けたほうがいいのでは？
     public void Init(UnityAction callBack = null)
@@ -54,8 +55,6 @@ public class AddTaskManager : MonoBehaviour
         m_rect.anchoredPosition = m_initPos;
         if (callBack != null)
             callBack.Invoke();
-        
-
         
         //最初に初期選択状態の方眼の数分AddSingleTaskを生成してリストに保存
         //とりあえず１５
@@ -68,9 +67,6 @@ public class AddTaskManager : MonoBehaviour
             adTask.SetPosition(new Vector2(-300, 0), new Vector2(300, 200), i);
 
         }
-
-        //Open();
-        
     }
     public void Open(UnityAction callBack = null)
     {
@@ -103,14 +99,14 @@ public class AddTaskManager : MonoBehaviour
                 DataTaskManager.Instance.TaskHeight());
 
        　//ここまで来たらアニメーションする
-        m_rect.DOAnchorPosY(0, m_animSpeed);
+        //m_rect.DOAnchorPosY(0, m_animSpeed);
 
     }
     public void OnClose()
     {
         //アニメーション後非アクティブにする
-        m_rect.DOAnchorPosY(m_initPos.y, m_animSpeed)
-            .OnComplete(()=> gameObject.SetActive(false));
+        //m_rect.DOAnchorPosY(m_initPos.y, m_animSpeed)
+        //    .OnComplete(()=> gameObject.SetActive(false));
         
         
     }
@@ -127,9 +123,12 @@ public class AddTaskManager : MonoBehaviour
         var task = new Task();
         task.SetInfo(
             testAdress,
+            -1,//TODO：ページID機能追加後変更
             m_titleInput.text,
+            "",//TODO:ページ機能追加後変更
             m_desctiptionInput.text,
-            m_scheduleInput.text,
+            DateTime.Today.ToString(),
+            m_scheduleInput.text,//TODO：デイリーは今日の時間、その他は年月0時0分指定
             m_priorityLabel.text
             );
         DataTaskManager.Instance.CreateInfo(task);

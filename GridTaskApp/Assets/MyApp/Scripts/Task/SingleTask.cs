@@ -8,6 +8,11 @@ public class SingleTask : MonoBehaviour
 {
     [SerializeField]
     RectTransform m_rect;
+    [SerializeField, Header("タスク詳細Win")]
+    TaskDetailWindow m_detailMnr;
+    [SerializeField]
+    AppWindow m_detailWindow;
+    
     [SerializeField]
     Text m_taskTitle;
     [SerializeField]
@@ -24,6 +29,8 @@ public class SingleTask : MonoBehaviour
 
     //このスペースのタスク情報
     Task m_task;
+    //詳細Win生成親
+    Transform m_winParent;
 
     float m_finishAlpha = 0.5f;
 
@@ -44,6 +51,17 @@ public class SingleTask : MonoBehaviour
     public Task GetTask()
     {//追加するかもしれないからとりあえず関数
         return m_task;
+    }
+    /// <summary>
+    /// タスク詳細ウィンドウを出す
+    /// </summary>
+    public void OnOpenDetail()
+    {
+        var parent = DataTaskManager.Instance.TaskWinParent;
+        var win = Instantiate(m_detailWindow,parent);
+        win.Init(
+            ()=>m_detailMnr.Init(m_task,this),
+            ()=>m_detailMnr.OnClose(win.gameObject));
     }
 
     public void OnFinish()

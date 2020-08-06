@@ -33,6 +33,8 @@ public class HomeManager : MonoBehaviour
 
     
 
+    
+
     //TODO 後で消す　テスト用
     private void Start()
     {
@@ -61,6 +63,7 @@ public class HomeManager : MonoBehaviour
     {
         
     }
+    //Home内のScreen管理
     public void OnClick(int nextPage)
     {
         //同じページだったらreturn
@@ -73,9 +76,12 @@ public class HomeManager : MonoBehaviour
         }
         SetPage((HomePage)nextPage);
     }
+
     void OpenAddPage()
     {
-        m_appWins[(int)HomePage.Add-1].Init(() => m_addTaskMgr.Open());
+        m_appWins[(int)HomePage.Add-1].Init(
+            () => m_addTaskMgr.Open(),
+            ()=>m_addTaskMgr.OnClose());
         
     }
     void SetPage(HomePage nextPage)

@@ -6,23 +6,50 @@ using UnityEngine;
 public class Task
 {
     //IDの管理・設定などはTask内で行う
-    public int ID { get; private set; }//タスク自体の識別ID
-    public int HouseID { get; private set; } //登録したタスク表の場所
-    public string Name { get; private set; }　//タスクの名前
-    public string Description { get; private set; }　//タスクの詳細説明
-    public string　Limit { get; private set; }　//タスクの期限
-    public string Priority { get; private set; }　//タスクの優先度
+    //タスク自体の識別ID　-1は例外
+    public int ID { get; private set; }
+    //登録したタスク表の場所
+    public int HouseID { get; private set; }
+    //登録されてるページID -1は例外
+    public int PageID { get; private set; }
+    //タスクの名前
+    public string Name { get; private set; }
+    //ページの名前
+    public string PageName { get; private set; }
+    //タスクの詳細説明
+    public string Description { get; private set; }
+    //タスクの登録日
+    public string CreateDate { get; private set; }
+    //タスクの期限
+    public string　Limit { get; private set; }
+    //タスクの優先度
+    public string Priority { get; private set; }
+    //このタスクは完了したものか
+    public bool IsFinish { get; private set; }　
 
-    public bool IsFinish { get; private set; }　//このタスクは完了したものか
-
-    public void SetInfo(int houseID,string name, string desc, string limit, string priority)
+    /// <summary>
+    /// タスク情報をセット(登録)する
+    /// </summary>
+    /// <param name="houseID">タスク表の場所</param>
+    /// <param name="pageID">ページID</param>
+    /// <param name="name">タスクタイトル</param>
+    /// <param name="pageName">ページ名前</param>
+    /// <param name="desc">タスク説明</param>
+    /// <param name="createDate">タスク登録日</param>
+    /// <param name="limit">タスク期限</param>
+    /// <param name="priority">優先度</param>
+    /// <param name="isFinish">タスクが完了したか</param>
+    public void SetInfo(int houseID,int pageID, string name, string pageName,string desc,string createDate, string limit, string priority,bool isFinish = false)
     {
         HouseID = houseID;
+        PageID = pageID;
         Name = name;
+        PageName = pageName;
         Description = desc;
+        CreateDate = createDate;
         Limit = limit;
         Priority = priority;
-        IsFinish = false;
+        IsFinish = isFinish;
 
         CreateID();
     }
@@ -39,7 +66,11 @@ public class Task
 
     }
     //CSVかJsonか何かに全タスク情報＆タスクスペースの情報を保存する
-    void SaveData()
+    public void SaveData()
+    {
+
+    }
+    public void LoadDate()
     {
 
     }
@@ -57,6 +88,10 @@ public class DataTaskManager : SingletonMonoBehaviour<DataTaskManager>
     Transform m_parent;
     [SerializeField, Header("個別のタスク")]
     SingleTask m_singleTask;
+    [SerializeField,Header("タスク関係Win生成親")]
+    Transform m_taskWinParnet;
+    public Transform TaskWinParent{
+        get { return m_taskWinParnet; }  }
 
     //タスク入れ物リスト ページがつくから、あとでDictionaryかリストのリストになる
     public List<SingleTask> SingleTaskList = new List<SingleTask>();
@@ -92,7 +127,7 @@ public class DataTaskManager : SingletonMonoBehaviour<DataTaskManager>
     void CreateTask(Task task)
     {
         //空のデータを挿入
-        task.SetInfo(AllTaskNum,"","","","");
+        task.SetInfo(AllTaskNum,-1,"","","","","","");
         var singleTask = Instantiate(m_singleTask,m_parent);
         singleTask.SetTask(task);
         //SingleTaskをリストに保存(Listのintが住所になる)
