@@ -31,8 +31,9 @@ public class HomeManager : MonoBehaviour
     [SerializeField]
     OptionManager m_optionMgr;
 
-    
 
+    [SerializeField]
+    TaskDetailWindow m_detailWin;
     
 
     //TODO 後で消す　テスト用
