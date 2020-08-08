@@ -49,13 +49,13 @@ public class TaskDatabase : MonoBehaviour
                     $"Proiority:{priority},\n" +
                     $"is_finish:{is_finish},\n"
                     ;
-
+                //var finish = Convert.ToBoolean(int.Parse($"{is_finish}"));
 
                 //テスト
                 Task newtask = new Task();
                 newtask.SetInfo(int.Parse($"{id}"), int.Parse($"{house_id}"), int.Parse($"{page_id}"),
                     $"{name}", $"{page_name}", $"{description}",
-                    $"{create_date}", $"{limit}", $"{priority}", true);
+                    $"{create_date}", $"{limit}", $"{priority}", false);
                 m_user_task_data.Add(newtask);
             }
 
@@ -75,7 +75,7 @@ public class TaskDatabase : MonoBehaviour
 
             var query = db.ExecuteQuery("INSERT INTO " + m_tableName +
                 " (id, house_id, page_id,name,page_name,description,create_date,priority,is_finish)" +
-                $" VALUES ('{task.ID}', '{task.HouseID}', '{task.PageID}','{task.Name}','{task.PageName}','{task.Description}','{task.CreateDate}','{task.Priority}','{task.IsFinish}')");
+                $" VALUES ('{task.ID}', '{task.HouseID}', '{task.PageID}','{task.Name}','{task.PageName}','{task.Description}','{task.CreateDate}','{task.Priority}','{0}')");
         }
         catch
         {
