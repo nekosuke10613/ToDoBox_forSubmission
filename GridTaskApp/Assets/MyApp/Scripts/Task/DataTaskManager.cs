@@ -26,7 +26,7 @@ public class Task
     public string Priority { get; private set; }
     //このタスクは完了したものか
     public bool IsFinish { get; private set; }　
-
+    
     /// <summary>
     /// タスク情報をセット(登録)する
     /// </summary>
@@ -53,6 +53,29 @@ public class Task
 
         CreateID();
     }
+    public void SetInfo(int id,int houseID, int pageID, string name, string pageName, string desc, string createDate, string limit, string priority, bool isFinish = false)
+    {
+        ID = id;
+        HouseID = houseID;
+        PageID = pageID;
+        Name = name;
+        PageName = pageName;
+        Description = desc;
+        CreateDate = createDate;
+        Limit = limit;
+        Priority = priority;
+        IsFinish = isFinish;
+    }
+    public void Init()
+    {
+
+    }
+    
+    void CreateID()
+    {
+
+    }
+    
     /// <summary>
     /// タスクの終了状態を保存する
     /// </summary>
@@ -61,22 +84,8 @@ public class Task
     {
         IsFinish = isFinish;
     }
-    void CreateID()
-    {
-
-    }
-    //CSVかJsonか何かに全タスク情報＆タスクスペースの情報を保存する
-    public void SaveData()
-    {
-
-    }
-    public void LoadDate()
-    {
-
-    }
-
 }
-//タスクデータの管理クラス　シングルトンにしたい
+//タスクデータの管理クラス　読み込みなどはここで行う
 public class DataTaskManager : SingletonMonoBehaviour<DataTaskManager>
 {
     public readonly Vector2 TaskInitPos = new Vector2(-300, 0);
@@ -100,6 +109,7 @@ public class DataTaskManager : SingletonMonoBehaviour<DataTaskManager>
     // Start is called before the first frame update
     void Start()
     {
+        
         Init();
     }
     public void Init()
@@ -110,8 +120,31 @@ public class DataTaskManager : SingletonMonoBehaviour<DataTaskManager>
             CreateThreeEmpty();
 
         // データ保存してある状態なら各方眼に情報を入れる
+        
+        
     }
-    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            
+            var task = FindObjectOfType<TaskDatabase>().TestTask;
+            Debug.Log(task.ID);
+            //タスク情報入れる先の住所を持ってくる
+            var taskAdress = SingleTaskList[1];
+            //情報を入れる
+            taskAdress.SetTask(task);
+        }
+    }
+    //CSVかJsonか何かに全タスク情報＆タスクスペースの情報を保存する
+    public void SaveData()
+    {
+
+    }
+    public void LoadDate()
+    {
+
+    }
     /// <summary>
     /// タスクの情報を作成して既存のボックスに代入
     /// </summary>
