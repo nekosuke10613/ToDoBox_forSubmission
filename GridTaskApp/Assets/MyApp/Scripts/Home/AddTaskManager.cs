@@ -118,11 +118,11 @@ public class AddTaskManager : MonoBehaviour
         //セーブ禁止ならreturn 
         if (!m_saveButton.CanSave) return;
         //入力したタスクを登録する
-        var testAdress = m_currentID;//int.Parse(m_testAdressText.text);
+        //var testAdress = m_currentID;//int.Parse(m_testAdressText.text);
 
         var task = new Task();
         task.SetInfo(
-            testAdress,
+            m_currentID,
             -1,//TODO：ページID機能追加後変更
             m_titleInput.text,
             "",//TODO:ページ機能追加後変更

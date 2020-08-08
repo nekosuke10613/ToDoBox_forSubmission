@@ -73,7 +73,7 @@ public class Task
     
     void CreateID()
     {
-
+        ID = 1;
     }
     
     /// <summary>
@@ -83,6 +83,21 @@ public class Task
     public void SaveIsFinish(bool isFinish)
     {
         IsFinish = isFinish;
+    }
+    public  static void DebugTaskInfo(Task task)
+    {
+        Debug.Log(
+            "ID: " + task.ID.ToString()+
+            "\nName: " + task.Name +
+            "\n HouseID: " + task.HouseID.ToString() +
+            "\n PageID: " + task.PageID.ToString() +
+            
+            "\nPageName: " + task.PageName +
+            "\nDescription: " + task.Description +
+            "\nCreateDate: " + task.CreateDate +
+            "\nLimit: " + task.Limit +
+            "\nPrority: " + task.Priority +
+            "\nIsFinish: " + task.IsFinish);
     }
 }
 //タスクデータの管理クラス　読み込みなどはここで行う
@@ -99,6 +114,7 @@ public class DataTaskManager : SingletonMonoBehaviour<DataTaskManager>
     SingleTask m_singleTask;
     [SerializeField,Header("タスク関係Win生成親")]
     Transform m_taskWinParnet;
+
     public Transform TaskWinParent{
         get { return m_taskWinParnet; }  }
 
@@ -120,30 +136,26 @@ public class DataTaskManager : SingletonMonoBehaviour<DataTaskManager>
             CreateThreeEmpty();
 
         // データ保存してある状態なら各方眼に情報を入れる
-        
+        LoadData();
         
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            
-            var task = FindObjectOfType<TaskDatabase>().TestTask;
-            Debug.Log(task.ID);
-            //タスク情報入れる先の住所を持ってくる
-            var taskAdress = SingleTaskList[1];
-            //情報を入れる
-            taskAdress.SetTask(task);
-        }
-    }
+    
     //CSVかJsonか何かに全タスク情報＆タスクスペースの情報を保存する
     public void SaveData()
     {
 
     }
-    public void LoadDate()
+    public void LoadData()
     {
-
+        var tasks = FindObjectOfType<TaskDatabase>().m_user_task_data;
+        foreach (Task task in tasks)
+        {
+            Task.DebugTaskInfo(task);
+            //タスク情報入れる先の住所を持ってくる
+            var taskAdress = SingleTaskList[task.HouseID];
+            //情報を入れる
+            taskAdress.SetTask(task);
+        }
     }
     /// <summary>
     /// タスクの情報を作成して既存のボックスに代入
@@ -154,6 +166,8 @@ public class DataTaskManager : SingletonMonoBehaviour<DataTaskManager>
         var taskAdress = SingleTaskList[task.HouseID];
         //情報を入れる
         taskAdress.SetTask(task);
+        Task.DebugTaskInfo(task);
+        TaskDatabase.Insert(task);
     }
     //単体方眼をクリエイト
     //TODO : (指定した空白に情報を詰める処理にする)

@@ -5,17 +5,25 @@ using UnityEngine.UI;
 
 public class TaskDatabase : MonoBehaviour
 {
-    public Text OwnerObject;
-    private List<string> Charactors = new List<string>();
-    public Task TestTask = new Task();
+    static readonly string m_fileName = "user_task_data.db";
+    static readonly string m_tableName = "TaskData";
+
+
+    public List<Task> m_user_task_data = new List<Task>();
+    //public Task TestTask = new Task();
     // Start is called before the first frame update
     void Start()
     {
+        Select();
+    }
+    //単体
+    public void Select()
+    {
         try
         {
-            var fileName = "user_task_data.db";
-            var db = new SqliteDatabase(fileName);
-            var query = db.ExecuteQuery("SELECT * FROM TaskData");
+            
+            var db = new SqliteDatabase(m_fileName);
+            var query = db.ExecuteQuery("SELECT * FROM "+ m_tableName);
 
             foreach (var row in query.Rows)
             {
@@ -33,48 +41,50 @@ public class TaskDatabase : MonoBehaviour
                 var text = $"ID:{id},\n" +
                     $"HouseID:{house_id},\n" +
                     $"PageID:{page_id}, \n" +
-                    $"Name:{name},\n"+
+                    $"Name:{name},\n" +
                     $"PageName:{page_name},\n" +
                     $"Description:{description},\n" +
                     $"CreateDate:{create_date},\n" +
                     $"Limit:{limit},\n" +
                     $"Proiority:{priority},\n" +
-                    $"is_finish:{is_finish},\n" 
+                    $"is_finish:{is_finish},\n"
                     ;
 
-                Charactors.Add(text);
-                var test = $"{name}";
-                Debug.Log(test);
+
                 //テスト
-                TestTask.SetInfo(int.Parse($"{id}"), int.Parse($"{house_id}"), int.Parse($"{page_id}"),
+                Task newtask = new Task();
+                newtask.SetInfo(int.Parse($"{id}"), int.Parse($"{house_id}"), int.Parse($"{page_id}"),
                     $"{name}", $"{page_name}", $"{description}",
                     $"{create_date}", $"{limit}", $"{priority}", true);
+                m_user_task_data.Add(newtask);
             }
 
         }
         catch (Exception ex)
         {
-            Charactors.Add(ex.Message);
+            Debug.LogError("タスクデータ読み込みに失敗した");
+            
         }
     }
-
-    // Update is called once per frame
-    void Update()
+    //単体
+    public static void Insert(Task task)
     {
-        if (OwnerObject != null && Charactors.Count > 0)
+        try
         {
-            string text = "";
+            var db = new SqliteDatabase(m_fileName);
 
-            if (Charactors.Count > 0)
-            {
-                text = string.Join("\r\n", Charactors);
-            }
-            else
-            {
-                text = "キャラクターが存在しません";
-            }
-
-            OwnerObject.text = text;
+            var query = db.ExecuteQuery("INSERT INTO " + m_tableName +
+                " (id, house_id, page_id,name,page_name,description,create_date,priority,is_finish)" +
+                $" VALUES ('{task.ID}', '{task.HouseID}', '{task.PageID}','{task.Name}','{task.PageName}','{task.Description}','{task.CreateDate}','{task.Priority}','{task.IsFinish}')");
+        }
+        catch
+        {
+            throw;
         }
     }
+    public void InfoUpdate()
+    {
+
+    }
+    
 }
