@@ -10,7 +10,7 @@ enum HomePage
     Option = 3, //　設定
     Add = 4,
 }
-public class HomeManager : MonoBehaviour
+public class HomeManager : SingletonMonoBehaviour<HomeManager>
 {
     //[SerializeField,Header("各ページのプレハブを生成する親オブジェクト")]
     //GameObject m_pagesParent;

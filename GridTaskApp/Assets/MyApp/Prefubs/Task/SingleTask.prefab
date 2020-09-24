@@ -61,6 +61,7 @@ MonoBehaviour:
     type: 3}
   m_detailWindow: {fileID: 5661136608820173393, guid: abb09953fd238b449b0431b611588b06,
     type: 3}
+  m_addWindow: {fileID: 0}
   m_taskTitle: {fileID: 2820975851849231421}
   m_taskDescription: {fileID: 3777613851038348955}
   m_taskLimit: {fileID: 8253961776224783834}
@@ -90,6 +91,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 31523096103085150}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

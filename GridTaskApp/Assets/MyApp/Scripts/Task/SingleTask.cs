@@ -10,8 +10,12 @@ public class SingleTask : MonoBehaviour
     RectTransform m_rect;
     [SerializeField, Header("タスク詳細Win")]
     TaskDetailWindow m_detailMnr;
+    [SerializeField, Header("タスク詳細Win")]
+    AddTaskManager m_addMgr;
     [SerializeField]
     AppWindow m_detailWindow;
+    [SerializeField]
+    AppWindow m_addWindow;
     
     [SerializeField]
     Text m_taskTitle;
@@ -57,11 +61,18 @@ public class SingleTask : MonoBehaviour
     /// </summary>
     public void OnOpenDetail()
     {
-        var parent = DataTaskManager.Instance.TaskWinParent;
-        var win = Instantiate(m_detailWindow,parent);
-        win.Init(
-            ()=>m_detailMnr.Init(m_task,this),
-            ()=>m_detailMnr.OnClose(win.gameObject));
+        if (m_task.Name != "")
+        {
+            var parent = DataTaskManager.Instance.TaskWinParent;
+            //未追加なら追加Win　追加済なら詳細。
+            var win = Instantiate(m_detailWindow, parent);
+            win.Init(
+                () => m_detailMnr.Init(m_task, this),
+                () => m_detailMnr.OnClose(win.gameObject));
+        }
+        else 
+            HomeManager.Instance.OnClick(4);
+
     }
 
     public void OnFinish()
