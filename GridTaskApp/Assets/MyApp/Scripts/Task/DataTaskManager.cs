@@ -169,6 +169,11 @@ public class DataTaskManager : SingletonMonoBehaviour<DataTaskManager>
         Task.DebugTaskInfo(task);
         TaskDatabase.Insert(task);
     }
+    public void DeleteInfo(Task task)
+    {
+        TaskDatabase.Delete(task);
+        Debug.Log("削除。データリストからの削除と表示の更新まだ");
+    }
     //単体方眼をクリエイト
     //TODO : (指定した空白に情報を詰める処理にする)
     void CreateTask(Task task)

@@ -9,8 +9,12 @@ public class AppWindow : MonoBehaviour
 {
     [SerializeField]
     RectTransform m_rect;
-    [SerializeField]
+    [SerializeField,Header("アニメーションタイプどちらかにチェック")]
     bool m_isSlideAnim = false;
+    [SerializeField]
+    bool m_isFadeAnim = false;
+    [SerializeField]
+    CanvasGroup m_group;
 
     readonly Vector2 m_initPos = new Vector2(0, -2000);
     readonly float m_animSpeed = 0.3f;
@@ -28,6 +32,11 @@ public class AppWindow : MonoBehaviour
         //ここで共通アニメーション行いたい
         if(m_isSlideAnim)
             m_rect.DOAnchorPosY(0, m_animSpeed);
+        if (m_isFadeAnim)
+        {
+            m_group.alpha = 0;
+            m_group.DOFade(1, 0.3f);
+        }
 
     }
     public void OnClose()
@@ -42,7 +51,16 @@ public class AppWindow : MonoBehaviour
                     gameObject.SetActive(false);
                     });
 
-        
+        if (m_isFadeAnim)
+        {
+            m_group.DOFade(0, 0.3f)
+                .OnComplete(()=> {
+                    //アニメーション後にオブジェクト消すとかデータ保存とかの処理を行う
+                    if (m_closeCallback != null)
+                        m_closeCallback.Invoke();
+                    gameObject.SetActive(false);
+                });
+        }
 
     }
     #region アタッチ自動化

@@ -47,7 +47,7 @@ public class AppButton : MonoBehaviour,
     }
     public void Init()
     {
-        m_rect.localScale = Vector2.one;
+        //m_rect.localScale = Vector2.one;
         m_isPush = false;
         m_pushCount = 0;
     }

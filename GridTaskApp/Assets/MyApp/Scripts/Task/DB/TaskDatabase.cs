@@ -82,6 +82,10 @@ public class TaskDatabase : MonoBehaviour
             throw;
         }
     }
+    public static void Delete(Task task)
+    {
+
+    }
     public void InfoUpdate()
     {
 

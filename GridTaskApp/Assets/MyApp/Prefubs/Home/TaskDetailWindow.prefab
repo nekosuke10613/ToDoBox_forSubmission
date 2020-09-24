@@ -325,8 +325,8 @@ MonoBehaviour:
   m_onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OnClose
+      - m_Target: {fileID: 6403105726423138813}
+        m_MethodName: OnDelete
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1541,7 +1541,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "\u672A\u8A2D\u5B9A"
 --- !u!1 &3720262135471122066
 GameObject:
   m_ObjectHideFlags: 0
@@ -3659,8 +3659,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3758,6 +3758,7 @@ GameObject:
   - component: {fileID: 6403105726423138813}
   - component: {fileID: 496342382533985429}
   - component: {fileID: 1188918612}
+  - component: {fileID: 5270946833948441778}
   m_Layer: 5
   m_Name: TaskDetailWindow
   m_TagString: Untagged
@@ -3785,7 +3786,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -2000}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 2000, y: 6000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6518942728562415385
@@ -3838,7 +3839,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_rect: {fileID: 321137302314487249}
-  m_isSlideAnim: 1
+  m_isSlideAnim: 0
+  m_isFadeAnim: 1
+  m_group: {fileID: 5270946833948441778}
 --- !u!114 &6403105726423138813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3897,6 +3900,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &5270946833948441778
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8093675531630883161}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8599472346515016546
 GameObject:
   m_ObjectHideFlags: 0

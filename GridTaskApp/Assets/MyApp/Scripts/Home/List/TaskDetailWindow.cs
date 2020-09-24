@@ -42,8 +42,9 @@ public class TaskDetailWindow : MonoBehaviour
         m_descriptionText.text = task.Description;
         m_currentTask = task;
         m_singleTask = single;
-
+        
     }
+   
     public void OnClose(GameObject thisObj)
     {
         //SingleTaskに変更したデータを反映(IDはそのままにしたい)
@@ -63,11 +64,32 @@ public class TaskDetailWindow : MonoBehaviour
         //データを保存してWindowを閉じる
         Destroy(thisObj);
     }
+    public void OnDelete()
+    {
+        
+        AlertManager.Instance.Alert("確認", "このタスクを削除します\nよろしいですか？",
+            ()=> {
+                DeleteTask();
+                });
+    }
     /// <summary>
     /// 今選択している方眼のタスク情報を削除して空白にする
     /// </summary>
     void DeleteTask()
     {
+        ////ここで空白にする
+        //m_currentTask.SetInfo(m_currentTask.HouseID,
+        //    0,//
+        //    "",
+        //    "",
+        //    "",
+        //    "",//
+        //    "",
+        //    "",//
+        //    false);//
+        //m_singleTask.SetTask(m_currentTask);
+        DataTaskManager.Instance.DeleteInfo(m_currentTask);
+        
 
     }
     #region アタッチ自動化
